@@ -1,7 +1,7 @@
 #include "pitches.h"
 
-constexpr int noteOne = NOTE_G3;
-constexpr int noteTwo = NOTE_D3;
+// constexpr int noteOne = NOTE_G3;
+// constexpr int noteTwo = NOTE_D3;
 
 
 constexpr int LedPin_1 = 6;
@@ -12,11 +12,12 @@ constexpr int ledPinInterval = 1000;
 
 constexpr int piezoPin = 13;
 int lastPiezoUpdate = 0;
-constexpr int piezoPinInterval = 700;
+const int duration[18] = {750, 50, 300, 100, 100, 200, 200, 50, 50, 50, 750, 50, 300, 100, 100, 200, 200, 150};
+
 
 int notePlaying = 1;
 
-int Notes[4] = {NOTE_G3, NOTE_D3, NOTE_F6, NOTE_C1};
+int Notes[18] = {NOTE_D2, 0, NOTE_G2, 0, 0, NOTE_E2, NOTE_AS2, 0, 0, 0, NOTE_D3, 0, NOTE_G3, 0, 0, NOTE_F2, NOTE_A2, 0 };
 int noteCount = 0;
 
 
@@ -39,23 +40,12 @@ void loop() {
     digitalWrite(LedPin_2, !ledState_2);
     lastLedUpdate = currentMillis;
   }
-  // if ((currentMillis - lastPiezoUpdate) >= piezoPinInterval) {
-  //   if (notePlaying ==1) notePlaying =2;
-  //   else notePlaying = 1;
 
-  //   int noteToPlay = noteOne;
-  //   if(notePlaying ==2) noteToPlay = noteTwo;
-    
-  //   tone(piezoPin, noteToPlay, piezoPinInterval);
-
-
-  //   lastPiezoUpdate = currentMillis;
-  // }
-  if ((currentMillis - lastPiezoUpdate) >= piezoPinInterval) {
+  if ((currentMillis - lastPiezoUpdate) >= duration[noteCount] + 100) {
   
     int noteToPlay = Notes[noteCount];
     
-    tone(piezoPin, noteToPlay, piezoPinInterval);
+    tone(piezoPin, noteToPlay, duration[noteCount]);
 
     int NoteLen = sizeof(Notes)/sizeof(Notes[0]);
 
